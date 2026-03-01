@@ -18,7 +18,7 @@
       "value": "Dublin",
       "bind": {
         "input": "select",
-        "options": ["Dublin", "Rest of Ireland"],
+        "options": ["Dublin", "National", "Rest of Ireland"],
         "name": "Region: "
       }
     }
@@ -36,7 +36,7 @@
       "title": { "text": "1. Price vs Rent Growth Over Time", "anchor": "middle", "fontSize": 20 },
 
       "transform": [
-        { "filter": "datum.Region == region" },
+        { "filter": "datum.Region == region || datum.Region == 'National'" },
         { "filter": "isFinite(datum.YearNum)" },
 
         { "fold": ["PriceGrowthNum", "RentGrowthNum"], "as": ["Metric", "Growth"] },
