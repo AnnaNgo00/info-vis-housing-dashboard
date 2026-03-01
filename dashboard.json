@@ -2,11 +2,15 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Is Housing Supply Keeping Up with Price & Rent Growth?",
-    "subtitle": "Regional analysis: Dublin vs Rest of Ireland"
+    "subtitle": "Regional analysis: Dublin vs Rest of Ireland",
+    "anchor": "middle",
+    "fontSize": 28,
+    "subtitleFontSize": 16
   },
+
   "data": {
-  "url": "https://raw.githubusercontent.com/AnnaNgo00/info-vis-housing-dashboard/main/processed_housing_master.csv"
- },
+    "url": "https://raw.githubusercontent.com/AnnaNgo00/info-vis-housing-dashboard/main/processed_housing_master.csv"
+  },
 
   "params": [
     {
@@ -27,79 +31,92 @@
     { "calculate": "toNumber(datum.Completions_per_1000)", "as": "CompPer1000Num" }
   ],
 
-  "vconcat": [
+  "hconcat": [
     {
-      "title": "1. Price vs Rent Growth Over Time",
-      "transform": [
-        { "filter": "datum.Region == region" },
-        { "filter": "isFinite(datum.YearNum)" },
-
+      "vconcat": [
         {
-          "fold": ["PriceGrowthNum", "RentGrowthNum"],
-          "as": ["Metric", "Growth"]
+          "title": { "text": "1. Price vs Rent Growth Over Time", "anchor": "middle", "fontSize": 20 },
+
+          "transform": [
+            { "filter": "datum.Region == region" },
+            { "filter": "isFinite(datum.YearNum)" },
+            { "fold": ["PriceGrowthNum", "RentGrowthNum"], "as": ["Metric", "Growth"] },
+            { "filter": "isFinite(datum.Growth)" },
+            { "calculate": "datum.Metric == 'PriceGrowthNum' ? 'Price Growth' : 'Rent Growth'", "as": "MetricLabel" }
+          ],
+
+          "mark": { "type": "line", "point": true, "strokeWidth": 3 },
+
+          "encoding": {
+            "x": {
+              "field": "YearNum",
+              "type": "quantitative",
+              "title": "Year",
+              "axis": { "format": "d", "tickMinStep": 1 }
+            },
+            "y": {
+              "field": "Growth",
+              "type": "quantitative",
+              "title": "Growth (%)"
+            },
+            "color": { "field": "MetricLabel", "type": "nominal", "title": null },
+            "tooltip": [
+              { "field": "YearNum", "title": "Year", "format": "d" },
+              { "field": "MetricLabel", "title": "Metric" },
+              { "field": "Growth", "title": "Value", "format": ".2f" }
+            ]
+          },
+
+          "width": 700,
+          "height": 300
         },
-        { "filter": "isFinite(datum.Growth)" },
 
         {
-          "calculate": "datum.Metric == 'PriceGrowthNum' ? 'Price Growth' : 'Rent Growth'",
-          "as": "MetricLabel"
+          "title": { "text": "2. Housing Supply (Completions per 1,000 Population)", "anchor": "middle", "fontSize": 20 },
+
+          "transform": [
+            { "filter": "datum.Region == region" },
+            { "filter": "isFinite(datum.YearNum) && isFinite(datum.CompPer1000Num)" }
+          ],
+
+          "mark": { "type": "line", "point": true, "strokeWidth": 3 },
+
+          "encoding": {
+            "x": {
+              "field": "YearNum",
+              "type": "quantitative",
+              "title": "Year",
+              "axis": { "format": "d", "tickMinStep": 1 }
+            },
+            "y": {
+              "field": "CompPer1000Num",
+              "type": "quantitative",
+              "title": "Completions per 1,000"
+            },
+            "tooltip": [
+              { "field": "YearNum", "title": "Year", "format": "d" },
+              { "field": "CompPer1000Num", "title": "Completions per 1,000", "format": ".3f" }
+            ]
+          },
+
+          "width": 700,
+          "height": 280
         }
-      ],
-      "mark": { "type": "line", "point": true },
-      "encoding": {
-        "x": {
-          "field": "YearNum",
-          "type": "quantitative",
-          "title": "Year",
-          "axis": { "format": "d", "tickMinStep": 1 }
-        },
-        "y": { "field": "Growth", "type": "quantitative", "title": "Growth (%)" },
-        "color": { "field": "MetricLabel", "type": "nominal", "title": null },
-        "tooltip": [
-          { "field": "YearNum", "title": "Year", "format": "d" },
-          { "field": "MetricLabel", "title": "Metric" },
-          { "field": "Growth", "title": "Value", "format": ".2f" }
-        ]
-      },
-      "height": 250
+      ]
     },
 
     {
-      "title": "2. Housing Supply (Completions per 1,000 Population)",
-      "transform": [
-        { "filter": "datum.Region == region" },
-        { "filter": "isFinite(datum.YearNum) && isFinite(datum.CompPer1000Num)" }
-      ],
-      "mark": { "type": "line", "point": true },
-      "encoding": {
-        "x": {
-          "field": "YearNum",
-          "type": "quantitative",
-          "title": "Year",
-          "axis": { "format": "d", "tickMinStep": 1 }
-        },
-        "y": {
-          "field": "CompPer1000Num",
-          "type": "quantitative",
-          "title": "Completions per 1,000"
-        },
-        "tooltip": [
-          { "field": "YearNum", "title": "Year", "format": "d" },
-          { "field": "CompPer1000Num", "title": "Completions per 1,000", "format": ".3f" }
-        ]
-      },
-      "height": 220
-    },
+      "title": { "text": "3. Supply vs Price Growth (with trendline)", "anchor": "middle", "fontSize": 20 },
 
-    {
-      "title": "3. Relationship: Supply vs Price Growth (with trendline)",
       "transform": [
         { "filter": "datum.Region == region" },
         { "filter": "isFinite(datum.CompPer1000Num) && isFinite(datum.PriceGrowthNum)" }
       ],
+
       "layer": [
         {
-          "mark": { "type": "circle", "size": 80, "opacity": 0.7 },
+          "mark": { "type": "circle", "size": 120, "opacity": 0.7 },
+
           "encoding": {
             "x": {
               "field": "CompPer1000Num",
@@ -119,21 +136,31 @@
           }
         },
         {
-          "transform": [
-            { "regression": "PriceGrowthNum", "on": "CompPer1000Num" }
-          ],
-          "mark": { "type": "line", "strokeWidth": 3 },
-          "encoding": {
-            "x": { "field": "CompPer1000Num", "type": "quantitative" },
-            "y": { "field": "PriceGrowthNum", "type": "quantitative" }
-          }
+          "transform": [{ "regression": "PriceGrowthNum", "on": "CompPer1000Num" }],
+          "mark": { "type": "line", "strokeWidth": 4 }
         }
       ],
-      "height": 260
+
+      "width": 520,
+      "height": 620
     }
   ],
 
   "config": {
-    "axis": { "labelFontSize": 12, "titleFontSize": 13, "gridOpacity": 0.2 }
+    "axis": {
+      "labelFontSize": 15,
+      "titleFontSize": 16,
+      "gridOpacity": 0.2
+    },
+    "legend": {
+      "labelFontSize": 15,
+      "titleFontSize": 16
+    },
+    "title": {
+      "fontSize": 20
+    },
+    "view": {
+      "stroke": "transparent"
+    }
   }
 }
