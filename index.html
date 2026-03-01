@@ -1,133 +1,57 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Housing Supply Dashboard</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Housing Supply Dashboard</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <style>
-    :root{
-      --bg:#0b1020;
-      --card:#111833;
-      --text:#e8ecff;
-      --muted:#b7c0ff;
-      --border:rgba(255,255,255,.12);
-      --shadow:0 10px 30px rgba(0,0,0,.35);
-      --radius:18px;
-    }
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: white;
+    color: black;
+  }
 
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1200px 700px at 20% -10%, rgba(120,135,255,.35), transparent 60%),
-                  radial-gradient(900px 600px at 90% 0%, rgba(110,240,210,.18), transparent 55%),
-                  var(--bg);
-      color:var(--text);
-      line-height:1.45;
-    }
+  .container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px;
+  }
 
-    .wrap{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 28px 18px 44px;
-    }
+  h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
 
-    header{
-      display:flex;
-      gap:18px;
-      align-items:flex-end;
-      justify-content:space-between;
-      margin-bottom: 18px;
-    }
-
-    .title h1{
-      margin:0;
-      font-size: 32px;
-      letter-spacing: .2px;
-    }
-
-    .title p{
-      margin:6px 0 0;
-      color:var(--muted);
-      max-width: 70ch;
-      font-size: 14px;
-    }
-
-    .pill{
-      border:1px solid var(--border);
-      padding:8px 12px;
-      border-radius:999px;
-      color:var(--muted);
-      font-size:12px;
-      backdrop-filter: blur(8px);
-      background: rgba(255,255,255,.04);
-      white-space: nowrap;
-    }
-
-    .card{
-      background: rgba(255,255,255,.04);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px;
-    }
-
-    #vis{
-      overflow:hidden;
-      border-radius: 14px;
-    }
-
-    .footer{
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 12px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      justify-content: space-between;
-    }
-
-    a{ color: #b7c0ff; }
-  </style>
+  .subtitle {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <header>
-      <div class="title">
-        <h1>Housing Supply vs Price & Rent Growth</h1>
-        <p>
-          Interactive regional dashboard (Dublin vs Rest of Ireland).
-          Use the region dropdown to compare trends, and inspect the supply–price relationship with the trendline.
-        </p>
-      </div>
-      <div class="pill">COMP30750 • Info Vis • Assignment 2</div>
-    </header>
 
-    <div class="card">
-      <div id="vis"></div>
-    </div>
-
-    <div class="footer">
-      <div><strong>Data:</strong> CSO-derived series (processed). <strong>Years:</strong> 2012–2025.</div>
-      <div><strong>Tip:</strong> Hover points for values • Use dropdown to switch region</div>
-    </div>
+<div class="container">
+  <h1>Housing Supply Dashboard</h1>
+  <div class="subtitle">
+    Interactive view of supply (new dwelling completions) vs price & rent growth.
   </div>
 
-  <script>
-    vegaEmbed("#vis", "dashboard.json", {
-      actions: true,
-      renderer: "canvas"
-    }).catch(err => {
-      console.error(err);
-      document.querySelector("#vis").innerHTML =
-        "<pre style='color:#ffb4b4; white-space:pre-wrap;'>" + err + "</pre>";
-    });
-  </script>
+  <div id="vis"></div>
+</div>
+
+<script>
+  vegaEmbed("#vis", "dashboard.json", { actions: false })
+    .catch(console.error);
+</script>
+
 </body>
 </html>
