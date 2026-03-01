@@ -66,13 +66,5 @@
     <div class="note">Tip: click a region on the map to filter charts; brush years on the growth chart.</div>
   </div>
 
-  <script>
-    vegaEmbed("#vis", "dashboard.vl.json", { actions: true })
-      .catch(err => {
-        console.error(err);
-        document.querySelector("#vis").innerHTML =
-          "<pre style='color:#b00020; white-space:pre-wrap;'>" + err + "</pre>";
-      });
-  </script>
 </body>
 </html>
