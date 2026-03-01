@@ -96,9 +96,14 @@
 </div>
 
 <script>
-  vegaEmbed("#vis1", "dashboard.json", {actions:false});
-  vegaEmbed("#vis2", "dashboard.json", {actions:false});
-  vegaEmbed("#vis3", "dashboard.json", {actions:false});
+  vegaEmbed("#vis", "dashboard.json", { actions: false })
+    .catch(err => {
+      console.error(err);
+      document.querySelector("#vis").innerHTML =
+        "<pre style='color:#b00020; font-size:14px; white-space:pre-wrap;'>" +
+        err +
+        "</pre>";
+    });
 </script>
 
 </body>
