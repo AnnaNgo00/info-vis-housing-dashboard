@@ -1,39 +1,105 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Housing Supply Dashboard</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Housing Supply Dashboard</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 24px; }
-    .wrap { max-width: 1100px; margin: 0 auto; }
-    h1 { margin: 0 0 6px 0; font-size: 28px; }
-    p  { margin: 0 0 18px 0; color: #444; }
-    #vis { margin-top: 10px; }
-    .note { margin-top: 10px; font-size: 12px; color: #666; }
-  </style>
+<style>
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f4f6fb;
+    color: #111;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 40px 40px 60px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 50px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+  }
+
+  .left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  }
+
+  .vega-embed {
+    width: 100% !important;
+  }
+
+  .vega-embed canvas {
+    width: 100% !important;
+  }
+
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <h1>Housing Supply Dashboard</h1>
-    <p>Interactive view of supply (new dwelling completions) vs price & rent growth.</p>
 
-    <div id="vis"></div>
-    <div class="note">Tip: click a region on the map to filter charts; brush years on the growth chart.</div>
+<div class="container">
+
+  <h1>Housing Supply Dashboard</h1>
+  <div class="subtitle">
+    Interactive view of supply (new dwelling completions) vs price & rent growth.
   </div>
 
-  <script>
-    vegaEmbed("#vis", "dashboard.json", { actions: true })
-      .catch(err => {
-        console.error(err);
-        document.querySelector("#vis").innerHTML =
-          "<pre style='color:#b00020; white-space:pre-wrap;'>" + err + "</pre>";
-      });
-  </script>
+  <div class="grid">
+
+    <div class="left-column">
+      <div class="card">
+        <div id="vis1"></div>
+      </div>
+
+      <div class="card">
+        <div id="vis2"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="vis3"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  vegaEmbed("#vis1", "dashboard.json", {actions:false});
+  vegaEmbed("#vis2", "dashboard.json", {actions:false});
+  vegaEmbed("#vis3", "dashboard.json", {actions:false});
+</script>
+
 </body>
 </html>
