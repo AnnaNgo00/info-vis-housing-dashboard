@@ -40,6 +40,7 @@
           "transform": [
             { "filter": "datum.Region == region" },
             { "filter": "isFinite(datum.YearNum)" },
+            { "filter": "abs(datum.Growth) <= 100"},
             { "fold": ["PriceGrowthNum", "RentGrowthNum"], "as": ["Metric", "Growth"] },
             { "filter": "isFinite(datum.Growth)" },
             { "calculate": "datum.Metric == 'PriceGrowthNum' ? 'Price Growth' : 'Rent Growth'", "as": "MetricLabel" }
@@ -110,7 +111,8 @@
 
       "transform": [
         { "filter": "datum.Region == region" },
-        { "filter": "isFinite(datum.CompPer1000Num) && isFinite(datum.PriceGrowthNum)" }
+        { "filter": "isFinite(datum.CompPer1000Num) && isFinite(datum.PriceGrowthNum)" },
+        { "filter": "abs(datum.PriceGrowthNum) <= 100"}
       ],
 
       "layer": [
@@ -136,7 +138,11 @@
           }
         },
         {
-          "transform": [{ "regression": "PriceGrowthNum", "on": "CompPer1000Num" }],
+          "transform": [
+            { "filter": "isFinite(datum.CompPer1000Num) && isFinite(datum.PriceGrowthNum)" },
+            { "filter": "datum.CompPer1000Num != null && datum.PriceGrowthNum != null" },
+            { "regression": "PriceGrowthNum", "on": "CompPer1000Num" }
+          ],
           "mark": { "type": "line", "strokeWidth": 4 }
         }
       ],
