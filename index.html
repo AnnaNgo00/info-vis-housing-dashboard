@@ -75,36 +75,24 @@
     Interactive view of supply (new dwelling completions) vs price & rent growth.
   </div>
 
-  <div class="grid">
-
-    <div class="left-column">
-      <div class="card">
-        <div id="vis1"></div>
-      </div>
-
-      <div class="card">
-        <div id="vis2"></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div id="vis3"></div>
-    </div>
-
+ <div class="grid">
+  <div class="card" style="grid-column: 1 / -1;">
+    <div id="vis"></div>
   </div>
-
 </div>
 
 <script>
-  vegaEmbed("#vis", "dashboard.json", { actions: false })
-    .catch(err => {
-      console.error(err);
-      document.querySelector("#vis").innerHTML =
-        "<pre style='color:#b00020; font-size:14px; white-space:pre-wrap;'>" +
-        err +
-        "</pre>";
-    });
+  vegaEmbed("#vis", "dashboard.json", {
+    actions: false,
+    renderer: "canvas"
+  })
+  .catch(err => {
+    console.error(err);
+    document.querySelector("#vis").innerHTML =
+      "<pre style='color:#b00020; font-size:14px; white-space:pre-wrap;'>" +
+      err +
+      "</pre>";
+  });
 </script>
-
 </body>
 </html>
