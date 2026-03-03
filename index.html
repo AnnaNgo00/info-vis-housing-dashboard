@@ -1,58 +1,62 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Housing Supply Dashboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Housing Supply Dashboard</title>
 
-<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: white;
-    color: black;
-  }
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: white;
+      color: black;
+    }
 
-  .container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 40px;
-  }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px;
+    }
 
-  h1 {
-    text-align: center;
-    font-size: 40px;
-    margin-bottom: 10px;
-  }
+    h1 {
+      text-align: center;
+      font-size: 40px;
+      margin: 0;
+      margin-bottom: 10px;
+    }
 
-  .subtitle {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 40px;
-  }
-</style>
+    .subtitle {
+      text-align: center;
+      font-size: 18px;
+      margin: 0;
+      margin-bottom: 40px;
+    }
+
+    /* This is the spacing you want between subtitle and the first chart */
+    #vis {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="container">
+    <h1>Housing Supply Dashboard</h1>
+    <div class="subtitle">
+      Interactive view of supply (new dwelling completions) vs price & rent growth.
+    </div>
 
-<div class="container">
-  <h1>Housing Supply Dashboard</h1>
-  <div class="subtitle">
-    Interactive view of supply (new dwelling completions) vs price & rent growth.
+    <div id="vis"></div>
   </div>
-  </div>
 
-  <div id="vis"></div>
-</div>
-
-<script>
-  vegaEmbed("#vis", "dashboard.json", { actions: false })
-    .catch(console.error);
-</script>
-
+  <script>
+    vegaEmbed("#vis", "dashboard.json", { actions: false })
+      .catch(console.error);
+  </script>
 </body>
 </html>
