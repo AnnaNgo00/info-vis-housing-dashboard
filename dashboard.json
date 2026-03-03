@@ -13,38 +13,26 @@
   },
 
   "transform": [
-    { 
-      "calculate": "toNumber(datum.Year)", 
-      "as": "YearNum" 
-    },
-    { 
-      "calculate": "toNumber(datum.Price_Growth)", 
-      "as": "PriceGrowthNum" 
-    },
-    { 
-      "calculate": "toNumber(datum.Rent_Growth)", 
-      "as": "RentGrowthNum" 
-    },
-    { 
-      "calculate": "toNumber(datum.Completions_per_1000)", 
-      "as": "CompPer1000Num" 
-    }
+    { "calculate": "toNumber(datum.Year)", "as": "YearNum" },
+    { "calculate": "toNumber(datum.Price_Growth)", "as": "PriceGrowthNum" },
+    { "calculate": "toNumber(datum.Rent_Growth)", "as": "RentGrowthNum" },
+    { "calculate": "toNumber(datum.Completions_per_1000)", "as": "CompPer1000Num" }
   ],
 
   "config": {
-    "axis": { 
-      "labelFontSize": 15, 
-      "titleFontSize": 16, 
+    "axis": {
+      "labelFontSize": 15,
+      "titleFontSize": 16,
       "gridOpacity": 0.2,
       "labelPadding": 15,
-      "labelOffset": 12 
+      "labelOffset": 12
     },
-    "legend": { 
-      "labelFontSize": 16, 
-      "titleFontSize": 16 
+    "legend": {
+      "labelFontSize": 16,
+      "titleFontSize": 16
     },
-    "title": { 
-      "fontSize": 20 
+    "title": {
+      "fontSize": 20
     }
   },
 
@@ -55,6 +43,8 @@
       "opacity": "independent"
     }
   },
+
+  "spacing": 50,
 
   "vconcat": [
     {
@@ -70,9 +60,9 @@
         { "filter": "datum.RentGrowthNum >= 0" }
       ],
 
-      "mark": { 
-        "type": "line", 
-        "point": true, 
+      "mark": {
+        "type": "line",
+        "point": true,
         "strokeWidth": 3,
         "color": "#0072B2"
       },
@@ -84,7 +74,6 @@
           "title": "Year",
           "axis": { "format": "d", "tickMinStep": 1 }
         },
-
         "y": {
           "field": "RentGrowthNum",
           "type": "quantitative",
@@ -95,7 +84,6 @@
             "titlePadding": 60
           }
         },
-
         "tooltip": [
           { "field": "YearNum", "title": "Year", "format": "d" },
           { "field": "RentGrowthNum", "title": "Rent Growth (%)", "format": ".2f" }
@@ -106,7 +94,6 @@
       "height": 280
     },
 
-    
     {
       "title": {
         "text": "National vs Dublin",
@@ -119,6 +106,8 @@
         { "filter": "isFinite(datum.YearNum)" }
       ],
 
+      "spacing": 50,
+
       "vconcat": [
         {
           "title": {
@@ -129,15 +118,15 @@
 
           "transform": [
             { "filter": "isFinite(datum.CompPer1000Num)" },
-
             {
               "aggregate": [
                 { "op": "mean", "field": "CompPer1000Num", "as": "Supply" }
               ],
               "groupby": ["YearNum", "Region"]
             },
-
-            { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'", "as": "Series" 
+            {
+              "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'",
+              "as": "Series"
             }
           ],
 
@@ -154,12 +143,8 @@
               "field": "Supply",
               "type": "quantitative",
               "title": "Completions per 1,000",
-              "axis": {
-                "titleAngle": 0,
-                "titlePadding": 100
-              } 
+              "axis": { "titleAngle": 0, "titlePadding": 100 }
             },
-
             "color": {
               "field": "Series",
               "type": "nominal",
@@ -174,7 +159,6 @@
                 "symbolStrokeWidth": 3
               }
             },
-
             "tooltip": [
               { "field": "YearNum", "title": "Year", "format": "d" },
               { "field": "Series", "title": "Series" },
@@ -196,15 +180,16 @@
           "transform": [
             { "filter": "isFinite(datum.PriceGrowthNum)" },
             { "filter": "datum.PriceGrowthNum >= 0" },
-
-            { "aggregate": [
-                { "op": "mean", "field": "PriceGrowthNum", "as": "PriceGrowth" 
-                }
+            {
+              "aggregate": [
+                { "op": "mean", "field": "PriceGrowthNum", "as": "PriceGrowth" }
               ],
               "groupby": ["YearNum", "Region"]
             },
-
-            { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'", "as": "Series" }
+            {
+              "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'",
+              "as": "Series"
+            }
           ],
 
           "mark": { "type": "line", "point": true, "strokeWidth": 3 },
@@ -216,18 +201,13 @@
               "title": "Year",
               "axis": { "format": "d", "tickMinStep": 1 }
             },
-
             "y": {
               "field": "PriceGrowth",
               "type": "quantitative",
               "title": "Price Growth (%)",
               "scale": { "domainMin": 0 },
-              "axis": {
-                "titleAngle": 0,
-                "titlePadding": 80
-              } 
+              "axis": { "titleAngle": 0, "titlePadding": 80 }
             },
-
             "color": {
               "field": "Series",
               "type": "nominal",
@@ -242,7 +222,6 @@
                 "symbolStrokeWidth": 3
               }
             },
-
             "tooltip": [
               { "field": "YearNum", "title": "Year", "format": "d" },
               { "field": "Series", "title": "Series" },
@@ -253,49 +232,42 @@
           "width": 900,
           "height": 220
         }
-          
       ]
     },
 
     {
       "title": {
         "text": "4. Housing Supply Heatmap (Completions per 1,000)",
-        "anchor": "middle", 
-        "fontSize": 25 
+        "anchor": "middle",
+        "fontSize": 25
       },
-    
+
       "transform": [
-          { "filter": "datum.Region != 'National'" },
-          { "filter": "isFinite(datum.YearNum) && isFinite(datum.CompPer1000Num)" }
-        ],
-    
+        { "filter": "datum.Region != 'National'" },
+        { "filter": "isFinite(datum.YearNum) && isFinite(datum.CompPer1000Num)" }
+      ],
+
       "mark": "rect",
-    
+
       "encoding": {
-        "x": { 
-          "field": "YearNum", 
-          "type": "ordinal", 
-          "title": "Year", 
-          "axis": {
-            "labelAngle": 0
-          }
-        }, 
-        "y": { 
-          "field": "Region", 
-          "type": "nominal", 
-          "title": "Region", 
-          "axis": {
-            "titleAngle": 0
-          } 
+        "x": {
+          "field": "YearNum",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": { "labelAngle": 0 }
         },
-
-        "color": { 
-          "field": "CompPer1000Num", 
-          "type": "quantitative", 
+        "y": {
+          "field": "Region",
+          "type": "nominal",
+          "title": "Region",
+          "axis": { "titleAngle": 0 }
+        },
+        "color": {
+          "field": "CompPer1000Num",
+          "type": "quantitative",
           "title": "Per 1,000",
-          "scale": { "scheme": "viridis" } 
+          "scale": { "scheme": "viridis" }
         },
-
         "tooltip": [
           { "field": "YearNum", "type": "ordinal", "title": "Year" },
           { "field": "Region", "type": "nominal" },
@@ -306,7 +278,5 @@
       "width": 900,
       "height": 280
     }
-    
-
   ]
 }
