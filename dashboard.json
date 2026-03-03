@@ -111,7 +111,9 @@
           "type": "nominal", 
           "title": null,
           "legend": {
-            "orient": "top-right",
+            "orient": "none",
+            "legendX": 736,
+            "legendY": 10,
             "direction": "vertical",
             "offset": 10
           } 
@@ -134,8 +136,8 @@
           "legend": {
             "title": null,
             "orient": "none",
-            "legendX": 700,
-            "legendY": 10,
+            "legendX": 736,
+            "legendY": 47,
             "direction": "vertical"
           },
           "scale": {
@@ -154,192 +156,195 @@
       "height": 280
     },
 
-  {
-    "title": {
-      "text": "2. Housing Supply Heatmap (Completions per 1,000)",
-      "anchor": "middle", 
-      "fontSize": 25 
-    },
-    
-    "transform": [
-        { "filter": "datum.Region != 'National'" },
-        { "filter": "isFinite(datum.YearNum) && isFinite(datum.CompPer1000Num)" }
-      ],
-    
-    "mark": "rect",
-    
-    "encoding": {
-      "x": { 
-        "field": "YearNum", 
-        "type": "ordinal", 
-        "title": "Year", 
-        "axis": {
-          "labelAngle": 0
-        }
-      }, 
-      "y": { 
-        "field": "Region", 
-        "type": "nominal", 
-        "title": "Region", 
-        "axis": {
-          "titleAngle": 0
-        } 
-      },
-
-      "color": { 
-        "field": "CompPer1000Num", 
-        "type": "quantitative", 
-        "title": "Per 1,000" 
-      },
-
-      "tooltip": [
-        { "field": "YearNum", "type": "ordinal", "title": "Year" },
-        { "field": "Region", "type": "nominal" },
-        { "field": "CompPer1000Num", "type": "quantitative", "format": ".3f", "title": "Per 1,000" }
-      ]
-    },
-
-    "width": 900,
-    "height": 280
-},
-
-    {
-  "title": {
-    "text": "3. National baseline vs Selected region (Supply & Price Growth)",
-    "anchor": "middle",
-    "fontSize": 25
-  },
-
-  "transform": [
-    { "filter": "datum.Region == 'National' || datum.Region == 'Dublin'" },
-    { "filter": "isFinite(datum.YearNum)" }
-  ],
-
-  "vconcat": [
     {
       "title": {
-        "text": "3a. Supply (Completions per 1,000): National vs Dublin",
-        "anchor": "middle",
-        "fontSize": 20
+        "text": "2. Housing Supply Heatmap (Completions per 1,000)",
+        "anchor": "middle", 
+        "fontSize": 25 
       },
-
+    
       "transform": [
-        { "filter": "isFinite(datum.CompPer1000Num)" },
-
-        {
-          "aggregate": [
-            { "op": "mean", "field": "CompPer1000Num", "as": "Supply" }
-          ],
-          "groupby": ["YearNum", "Region"]
-        },
-
-        { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'", "as": "Series" }
-              ],
-
-      "mark": { "type": "line", "point": true, "strokeWidth": 3 },
-
+          { "filter": "datum.Region != 'National'" },
+          { "filter": "isFinite(datum.YearNum) && isFinite(datum.CompPer1000Num)" }
+        ],
+    
+      "mark": "rect",
+    
       "encoding": {
-        "x": {
-          "field": "YearNum",
-          "type": "quantitative",
-          "title": "Year",
-          "axis": { "format": "d", "tickMinStep": 1 }
-        },
-        "y": {
-          "field": "Supply",
-          "type": "quantitative",
-          "title": "Completions per 1,000",
+        "x": { 
+          "field": "YearNum", 
+          "type": "ordinal", 
+          "title": "Year", 
           "axis": {
-          "titleAngle": 0,
-          "titlePadding": 100
-          } 
-        },
-
-        "color": {
-          "field": "Series",
-          "type": "nominal",
-          "title": null,
-          "legend": {
-            "orient": "right",
-            "direction": "vertical",
-            "symbolStrokeWidth": 3
+            "labelAngle": 0
           }
+        }, 
+        "y": { 
+          "field": "Region", 
+          "type": "nominal", 
+          "title": "Region", 
+          "axis": {
+            "titleAngle": 0
+          } 
+        },
+
+        "color": { 
+          "field": "CompPer1000Num", 
+          "type": "quantitative", 
+          "title": "Per 1,000" 
         },
 
         "tooltip": [
-          { "field": "YearNum", "title": "Year", "format": "d" },
-          { "field": "Series", "title": "Series" },
-          { "field": "Supply", "title": "Completions per 1,000", "format": ".3f" }
+          { "field": "YearNum", "type": "ordinal", "title": "Year" },
+          { "field": "Region", "type": "nominal" },
+          { "field": "CompPer1000Num", "type": "quantitative", "format": ".3f", "title": "Per 1,000" }
         ]
       },
 
       "width": 900,
-      "height": 220
+      "height": 280
     },
 
     {
       "title": {
-        "text": "3b. Price Growth (%): National vs Dublin",
+        "text": "3. National baseline vs Dublin",
         "anchor": "middle",
-        "fontSize": 20
+        "fontSize": 25
       },
 
       "transform": [
-        { "filter": "isFinite(datum.PriceGrowthNum)" },
-
-        {
-          "aggregate": [
-            { "op": "mean", "field": "PriceGrowthNum", "as": "PriceGrowth" }
-          ],
-          "groupby": ["YearNum", "Region"]
-        },
-
-        { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'", "as": "Series" }
+        { "filter": "datum.Region == 'National' || datum.Region == 'Dublin'" },
+        { "filter": "isFinite(datum.YearNum)" }
       ],
 
-      "mark": { "type": "line", "point": true, "strokeWidth": 3 },
+      "vconcat": [
+        {
+          "title": {
+            "text": "3a. Supply (Completions per 1,000): National vs Dublin",
+            "anchor": "middle",
+            "fontSize": 20
+          },
 
-      "encoding": {
-        "x": {
-          "field": "YearNum",
-          "type": "quantitative",
-          "title": "Year",
-          "axis": { "format": "d", "tickMinStep": 1 }
+          "transform": [
+            { "filter": "isFinite(datum.CompPer1000Num)" },
+
+            {
+              "aggregate": [
+                { "op": "mean", "field": "CompPer1000Num", "as": "Supply" }
+              ],
+              "groupby": ["YearNum", "Region"]
+            },
+
+            { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'", "as": "Series" 
+            }
+          ],
+
+          "mark": { "type": "line", "point": true, "strokeWidth": 3 },
+
+          "encoding": {
+            "x": {
+              "field": "YearNum",
+              "type": "quantitative",
+              "title": "Year",
+              "axis": { "format": "d", "tickMinStep": 1 }
+            },
+            "y": {
+              "field": "Supply",
+              "type": "quantitative",
+              "title": "Completions per 1,000",
+              "axis": {
+              "titleAngle": 0,
+              "titlePadding": 100
+              } 
+            },
+
+            "color": {
+              "field": "Series",
+              "type": "nominal",
+              "title": null,
+              "legend": {
+                "orient": "bottom-right",
+                "direction": "vertical",
+                "symbolStrokeWidth": 3
+              }
+            },
+
+            "tooltip": [
+              { "field": "YearNum", "title": "Year", "format": "d" },
+              { "field": "Series", "title": "Series" },
+              { "field": "Supply", "title": "Completions per 1,000", "format": ".3f" }
+            ]
+          },
+
+          "width": 900,
+          "height": 220
         },
-        "y": {
-          "field": "PriceGrowth",
-          "type": "quantitative",
-          "title": "Price Growth (%)",
-          "scale": { "domainMin": 0 },
-          "axis": {
-          "titleAngle": 0,
-          "titlePadding": 80
-          } 
-        },
 
-        "color": {
-  "field": "Series",
-  "type": "nominal",
-  "title": null,
-  "legend": {
-    "orient": "right",
-    "direction": "vertical",
-    "symbolStrokeWidth": 3
-  }
-},
+        {
+          "title": {
+            "text": "3b. Price Growth (%): National vs Dublin",
+            "anchor": "middle",
+            "fontSize": 20
+          },
 
-        "tooltip": [
-          { "field": "YearNum", "title": "Year", "format": "d" },
-          { "field": "Series", "title": "Series" },
-          { "field": "PriceGrowth", "title": "Price Growth (%)", "format": ".2f" }
-        ]
-      },
+          "transform": [
+            { "filter": "isFinite(datum.PriceGrowthNum)" },
+            { "filter": "datum.PriceGrowthNum >= 0" },
 
-      "width": 900,
-      "height": 220
+            { "aggregate": [
+                { "op": "mean", "field": "PriceGrowthNum", "as": "PriceGrowth" 
+                }
+              ],
+              "groupby": ["YearNum", "Region"]
+            },
+
+            { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'", "as": "Series" }
+          ],
+
+          "mark": { "type": "line", "point": true, "strokeWidth": 3 },
+
+          "encoding": {
+            "x": {
+              "field": "YearNum",
+              "type": "quantitative",
+              "title": "Year",
+              "axis": { "format": "d", "tickMinStep": 1 }
+            },
+
+            "y": {
+              "field": "PriceGrowth",
+              "type": "quantitative",
+              "title": "Price Growth (%)",
+              "scale": { "domainMin": 0 },
+              "axis": {
+              "titleAngle": 0,
+              "titlePadding": 80
+              } 
+            },
+
+            "color": {
+              "field": "Series",
+              "type": "nominal",
+              "title": null,
+              "legend": {
+                "orient": "top-right",
+                "direction": "vertical",
+                "symbolStrokeWidth": 3
+              }
+            },
+
+            "tooltip": [
+              { "field": "YearNum", "title": "Year", "format": "d" },
+              { "field": "Series", "title": "Series" },
+              { "field": "PriceGrowth", "title": "Price Growth (%)", "format": ".2f" }
+            ]
+          },
+
+          "width": 900,
+          "height": 220
+        }
+      ]
     }
-  ]
-}
     
   ]
 }
