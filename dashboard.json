@@ -45,7 +45,7 @@
     },
     "title": { 
       "fontSize": 20 
-    }
+    },
   },
 
   "resolve": {
@@ -58,146 +58,47 @@
 
   "vconcat": [
     {
-      "title": { 
-        "text": "1. Price vs Rent Growth Over Time", 
-        "anchor": "middle", 
-        "fontSize": 25 
+      "title": {
+        "text": "1. National Rent Growth Over Time",
+        "anchor": "middle",
+        "fontSize": 25
       },
 
       "transform": [
-        { "filter": "datum.Region == 'National' || datum.Region == 'Dublin'" },
-        { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Selected region'", "as": "LineType" },
-        { "filter": "isFinite(datum.YearNum)" },
-
-        { 
-          "fold": ["PriceGrowthNum", "RentGrowthNum"], 
-          "as": ["Metric", "Growth"] 
-        },
-        { "filter": "isFinite(datum.Growth)" },
-        { "filter": "datum.Growth >= 0" },
-
-        {
-          "calculate": "datum.Metric == 'PriceGrowthNum' ? 'Price Growth' : 'Rent Growth'",
-          "as": "MetricLabel"
-        }
+        { "filter": "datum.Region == 'National'" },
+        { "filter": "isFinite(datum.YearNum) && isFinite(datum.RentGrowthNum)" },
+        { "filter": "datum.RentGrowthNum >= 0" }
       ],
 
-      "mark": { "type": "line", "point": true, "strokeWidth": 3 },
+      "mark": { 
+        "type": "line", 
+        "point": true, 
+        "strokeWidth": 3,
+        "color": "#0072B2"
+      },
 
       "encoding": {
         "x": {
           "field": "YearNum",
           "type": "quantitative",
           "title": "Year",
-          "axis": { 
-            "format": "d", 
-            "tickMinStep": 1 
-          }
+          "axis": { "format": "d", "tickMinStep": 1 }
         },
-        "y": { 
-          "field": "Growth", 
-          "type": "quantitative", 
-          "title": "Increase (%)",
-          "scale": {
-            "domainMin": 0
-          },
+
+        "y": {
+          "field": "RentGrowthNum",
+          "type": "quantitative",
+          "title": "Rent Growth (%)",
+          "scale": { "domainMin": 0 },
           "axis": {
             "titleAngle": 0,
             "titlePadding": 60
-          } 
-        },
-        "color": { 
-          "field": "MetricLabel", 
-          "type": "nominal", 
-          "title": null,
-          "legend": {
-            "orient": "none",
-            "legendX": 736,
-            "legendY": 10,
-            "direction": "vertical",
-            "offset": 10
-          } 
-        },
-        "detail": {
-          "field": "Region"
-        },
-        
-        "opacity": {
-          "condition": {
-            "test": "datum.Region == 'Dublin'", 
-            "value": 1
-          },
-          "value": 0.25
-        },
-
-        "strokeDash": {
-          "field": "LineType",
-          "type": "nominal",
-          "legend": {
-            "title": null,
-            "orient": "none",
-            "legendX": 736,
-            "legendY": 47,
-            "direction": "vertical"
-          },
-          "scale": {
-            "domain": ["National (baseline)"],
-            "range": [[6,4]]
           }
-        },
-        
-        "tooltip": [
-          { "field": "YearNum", "title": "Year", "format": "d" },
-          { "field": "MetricLabel", "title": "Metric" },
-          { "field": "Growth", "title": "Value", "format": ".2f" }
-        ]
-      },
-      "width": 900,
-      "height": 280
-    },
-
-    {
-      "title": {
-        "text": "2. Housing Supply Heatmap (Completions per 1,000)",
-        "anchor": "middle", 
-        "fontSize": 25 
-      },
-    
-      "transform": [
-          { "filter": "datum.Region != 'National'" },
-          { "filter": "isFinite(datum.YearNum) && isFinite(datum.CompPer1000Num)" }
-        ],
-    
-      "mark": "rect",
-    
-      "encoding": {
-        "x": { 
-          "field": "YearNum", 
-          "type": "ordinal", 
-          "title": "Year", 
-          "axis": {
-            "labelAngle": 0
-          }
-        }, 
-        "y": { 
-          "field": "Region", 
-          "type": "nominal", 
-          "title": "Region", 
-          "axis": {
-            "titleAngle": 0
-          } 
-        },
-
-        "color": { 
-          "field": "CompPer1000Num", 
-          "type": "quantitative", 
-          "title": "Per 1,000" 
         },
 
         "tooltip": [
-          { "field": "YearNum", "type": "ordinal", "title": "Year" },
-          { "field": "Region", "type": "nominal" },
-          { "field": "CompPer1000Num", "type": "quantitative", "format": ".3f", "title": "Per 1,000" }
+          { "field": "YearNum", "title": "Year", "format": "d" },
+          { "field": "RentGrowthNum", "title": "Rent Growth (%)", "format": ".2f" }
         ]
       },
 
@@ -205,9 +106,10 @@
       "height": 280
     },
 
+    
     {
       "title": {
-        "text": "3. National baseline vs Dublin",
+        "text": "National vs Dublin",
         "anchor": "middle",
         "fontSize": 25
       },
@@ -220,7 +122,7 @@
       "vconcat": [
         {
           "title": {
-            "text": "3a. Supply (Completions per 1,000): National vs Dublin",
+            "text": "2. Supply (Completions per 1,000): National vs Dublin",
             "anchor": "middle",
             "fontSize": 20
           },
@@ -253,8 +155,8 @@
               "type": "quantitative",
               "title": "Completions per 1,000",
               "axis": {
-              "titleAngle": 0,
-              "titlePadding": 100
+                "titleAngle": 0,
+                "titlePadding": 100
               } 
             },
 
@@ -262,6 +164,10 @@
               "field": "Series",
               "type": "nominal",
               "title": null,
+              "scale": {
+                "domain": ["National (baseline)", "Dublin"],
+                "range": ["#1F77B4", "#FF7F0E"]
+              },
               "legend": {
                 "orient": "bottom-right",
                 "direction": "vertical",
@@ -282,7 +188,7 @@
 
         {
           "title": {
-            "text": "3b. Price Growth (%): National vs Dublin",
+            "text": "3. Price Growth (%): National vs Dublin",
             "anchor": "middle",
             "fontSize": 20
           },
@@ -317,8 +223,8 @@
               "title": "Price Growth (%)",
               "scale": { "domainMin": 0 },
               "axis": {
-              "titleAngle": 0,
-              "titlePadding": 80
+                "titleAngle": 0,
+                "titlePadding": 80
               } 
             },
 
@@ -326,6 +232,10 @@
               "field": "Series",
               "type": "nominal",
               "title": null,
+              "scale": {
+                "domain": ["National (baseline)", "Dublin"],
+                "range": ["#1F77B4", "#FF7F0E"]
+              },
               "legend": {
                 "orient": "top-right",
                 "direction": "vertical",
@@ -343,7 +253,58 @@
           "width": 900,
           "height": 220
         }
+          
       ]
+    },
+
+    {
+      "title": {
+        "text": "4. Housing Supply Heatmap (Completions per 1,000)",
+        "anchor": "middle", 
+        "fontSize": 25 
+      },
+    
+      "transform": [
+          { "filter": "datum.Region != 'National'" },
+          { "filter": "isFinite(datum.YearNum) && isFinite(datum.CompPer1000Num)" }
+        ],
+    
+      "mark": "rect",
+    
+      "encoding": {
+        "x": { 
+          "field": "YearNum", 
+          "type": "ordinal", 
+          "title": "Year", 
+          "axis": {
+            "labelAngle": 0
+          }
+        }, 
+        "y": { 
+          "field": "Region", 
+          "type": "nominal", 
+          "title": "Region", 
+          "axis": {
+            "titleAngle": 0
+          } 
+        },
+
+        "color": { 
+          "field": "CompPer1000Num", 
+          "type": "quantitative", 
+          "title": "Per 1,000",
+          "scale": { "scheme": "viridis" } 
+        },
+
+        "tooltip": [
+          { "field": "YearNum", "type": "ordinal", "title": "Year" },
+          { "field": "Region", "type": "nominal" },
+          { "field": "CompPer1000Num", "type": "quantitative", "format": ".3f", "title": "Per 1,000" }
+        ]
+      },
+
+      "width": 900,
+      "height": 280
     }
     
   ]
