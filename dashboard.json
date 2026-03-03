@@ -1,8 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Is Housing Supply Keeping Up with Price & Rent Growth?",
-    "subtitle": "Regional analysis: Dublin vs Rest of Ireland",
     "anchor": "middle",
     "fontSize": 28,
     "subtitleFontSize": 16
@@ -43,7 +41,7 @@
       "opacity": "independent"
     }
   },
-  
+
   "spacing": 50,
   "padding": 30,
 
@@ -91,7 +89,7 @@
         ]
       },
 
-      "width": 1000,
+      "width": 800,
       "height": 280
     },
 
@@ -167,7 +165,7 @@
             ]
           },
 
-          "width": 1000,
+          "width": 800,
           "height": 220
         },
 
@@ -230,7 +228,7 @@
             ]
           },
 
-          "width": 1000,
+          "width": 800,
           "height": 220
         }
       ]
@@ -266,8 +264,20 @@
         "color": {
           "field": "CompPer1000Num",
           "type": "quantitative",
-          "title": "Per 1,000",
-          "scale": { "scheme": "viridis" }
+          "title": "Completions per 1,000",
+          "scale": { 
+            "scheme": "viridis",
+            "domain": [0, 14] 
+            },
+          "legend": {
+            "orient": "none",
+            "legendX": 500,
+            "legendY": 340,
+            "direction": "horizontal",
+            "gradientLength": 300,
+            "gradientThickness": 15,
+            "titleOrient": "top"
+          }
         },
         "tooltip": [
           { "field": "YearNum", "type": "ordinal", "title": "Year" },
@@ -276,7 +286,7 @@
         ]
       },
 
-      "width": 1000,
+      "width": 800,
       "height": 280
     }
   ]
