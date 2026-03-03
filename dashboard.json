@@ -12,18 +12,6 @@
     "url": "https://raw.githubusercontent.com/AnnaNgo00/info-vis-housing-dashboard/main/processed_housing_master.csv"
   },
 
-  "params": [
-    {
-      "name": "compareRegion",
-      "value": "Dublin",
-      "bind": {
-        "input": "select",
-        "options": ["Dublin", "Rest of Ireland"],
-        "name": "Compare to National: "
-      }
-    }
-  ],
-
   "transform": [
     { 
       "calculate": "toNumber(datum.Year)", 
@@ -77,7 +65,7 @@
       },
 
       "transform": [
-        { "filter": "datum.Region == 'National' || datum.Region == compareRegion" },
+        { "filter": "datum.Region == 'National' || datum.Region == 'Dublin'" },
         { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Selected region'", "as": "LineType" },
         { "filter": "isFinite(datum.YearNum)" },
 
@@ -134,7 +122,7 @@
         
         "opacity": {
           "condition": {
-            "test": "datum.Region == compareRegion", 
+            "test": "datum.Region == 'Dublin'", 
             "value": 1
           },
           "value": 0.25
@@ -162,7 +150,7 @@
           { "field": "Growth", "title": "Value", "format": ".2f" }
         ]
       },
-      "width": 1000,
+      "width": 900,
       "height": 280
     },
 
@@ -211,7 +199,7 @@
       ]
     },
 
-    "width": 1000,
+    "width": 900,
     "height": 280
 },
 
@@ -223,14 +211,14 @@
   },
 
   "transform": [
-    { "filter": "datum.Region == 'National' || datum.Region == compareRegion" },
+    { "filter": "datum.Region == 'National' || datum.Region == 'Dublin'" },
     { "filter": "isFinite(datum.YearNum)" }
   ],
 
   "vconcat": [
     {
       "title": {
-        "text": "3a. Supply (Completions per 1,000): National vs Selected region",
+        "text": "3a. Supply (Completions per 1,000): National vs Dublin",
         "anchor": "middle",
         "fontSize": 20
       },
@@ -245,8 +233,8 @@
           "groupby": ["YearNum", "Region"]
         },
 
-        { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Selected region'", "as": "Series" }
-      ],
+        { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'", "as": "Series" }
+              ],
 
       "mark": { "type": "line", "point": true, "strokeWidth": 3 },
 
@@ -278,16 +266,6 @@
           }
         },
 
-        "strokeDash": {
-          "field": "Series",
-          "type": "nominal",
-          "legend": null,
-          "scale": {
-            "domain": ["National (baseline)", "Selected region"],
-            "range": [[6, 4], [1, 0]]
-          }
-        },
-
         "tooltip": [
           { "field": "YearNum", "title": "Year", "format": "d" },
           { "field": "Series", "title": "Series" },
@@ -301,7 +279,7 @@
 
     {
       "title": {
-        "text": "3b. Price Growth (%): National vs Selected region",
+        "text": "3b. Price Growth (%): National vs Dublin",
         "anchor": "middle",
         "fontSize": 20
       },
@@ -316,7 +294,7 @@
           "groupby": ["YearNum", "Region"]
         },
 
-        { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Selected region'", "as": "Series" }
+        { "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'", "as": "Series" }
       ],
 
       "mark": { "type": "line", "point": true, "strokeWidth": 3 },
@@ -349,16 +327,6 @@
     "symbolStrokeWidth": 3
   }
 },
-
-        "strokeDash": {
-          "field": "Series",
-          "type": "nominal",
-          "legend": null,
-          "scale": {
-            "domain": ["National (baseline)", "Selected region"],
-            "range": [[6, 4], [1, 0]]
-          }
-        },
 
         "tooltip": [
           { "field": "YearNum", "title": "Year", "format": "d" },
