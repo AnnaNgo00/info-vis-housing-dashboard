@@ -80,7 +80,7 @@
           "scale": { "domainMin": 0 },
           "axis": {
             "titleAngle": 0,
-            "titlePadding": 60
+            "titlePadding": 80
           }
         },
         "tooltip": [
