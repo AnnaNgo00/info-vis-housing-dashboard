@@ -50,7 +50,7 @@
       "title": {
         "text": "1. National Rent Growth Over Time",
         "anchor": "middle",
-        "fontSize": 25
+        "fontSize": 25,
       },
 
       "transform": [
@@ -108,70 +108,10 @@
       "spacing": 50,
 
       "vconcat": [
-        {
-          "title": {
-            "text": "2. Supply (Completions per 1,000): National vs Dublin",
-            "anchor": "middle",
-            "fontSize": 20
-          },
-
-          "transform": [
-            { "filter": "isFinite(datum.CompPer1000Num)" },
-            {
-              "aggregate": [
-                { "op": "mean", "field": "CompPer1000Num", "as": "Supply" }
-              ],
-              "groupby": ["YearNum", "Region"]
-            },
-            {
-              "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'",
-              "as": "Series"
-            }
-          ],
-
-          "mark": { "type": "line", "point": true, "strokeWidth": 3 },
-
-          "encoding": {
-            "x": {
-              "field": "YearNum",
-              "type": "quantitative",
-              "title": "Year",
-              "axis": { "format": "d", "tickMinStep": 1 }
-            },
-            "y": {
-              "field": "Supply",
-              "type": "quantitative",
-              "title": "Completions per 1,000",
-              "axis": { "titleAngle": 0, "titlePadding": 100 }
-            },
-            "color": {
-              "field": "Series",
-              "type": "nominal",
-              "title": null,
-              "scale": {
-                "domain": ["National (baseline)", "Dublin"],
-                "range": ["#1F77B4", "#FF7F0E"]
-              },
-              "legend": {
-                "orient": "bottom-right",
-                "direction": "vertical",
-                "symbolStrokeWidth": 3
-              }
-            },
-            "tooltip": [
-              { "field": "YearNum", "title": "Year", "format": "d" },
-              { "field": "Series", "title": "Series" },
-              { "field": "Supply", "title": "Completions per 1,000", "format": ".3f" }
-            ]
-          },
-
-          "width": 800,
-          "height": 220
-        },
 
         {
           "title": {
-            "text": "3. Price Growth (%): National vs Dublin",
+            "text": "2. Price Growth (%): National vs Dublin",
             "anchor": "middle",
             "fontSize": 20
           },
@@ -225,6 +165,66 @@
               { "field": "YearNum", "title": "Year", "format": "d" },
               { "field": "Series", "title": "Series" },
               { "field": "PriceGrowth", "title": "Price Growth (%)", "format": ".2f" }
+            ]
+          },
+
+          "width": 800,
+          "height": 220
+        },
+        {
+          "title": {
+            "text": "3. Supply (Completions per 1,000): National vs Dublin",
+            "anchor": "middle",
+            "fontSize": 20
+          },
+
+          "transform": [
+            { "filter": "isFinite(datum.CompPer1000Num)" },
+            {
+              "aggregate": [
+                { "op": "mean", "field": "CompPer1000Num", "as": "Supply" }
+              ],
+              "groupby": ["YearNum", "Region"]
+            },
+            {
+              "calculate": "datum.Region == 'National' ? 'National (baseline)' : 'Dublin'",
+              "as": "Series"
+            }
+          ],
+
+          "mark": { "type": "line", "point": true, "strokeWidth": 3 },
+
+          "encoding": {
+            "x": {
+              "field": "YearNum",
+              "type": "quantitative",
+              "title": "Year",
+              "axis": { "format": "d", "tickMinStep": 1 }
+            },
+            "y": {
+              "field": "Supply",
+              "type": "quantitative",
+              "title": "Completions per 1,000",
+              "axis": { "titleAngle": 0, "titlePadding": 100 }
+            },
+            "color": {
+              "field": "Series",
+              "type": "nominal",
+              "title": null,
+              "scale": {
+                "domain": ["National (baseline)", "Dublin"],
+                "range": ["#1F77B4", "#FF7F0E"]
+              },
+              "legend": {
+                "orient": "bottom-right",
+                "direction": "vertical",
+                "symbolStrokeWidth": 3
+              }
+            },
+            "tooltip": [
+              { "field": "YearNum", "title": "Year", "format": "d" },
+              { "field": "Series", "title": "Series" },
+              { "field": "Supply", "title": "Completions per 1,000", "format": ".3f" }
             ]
           },
 
