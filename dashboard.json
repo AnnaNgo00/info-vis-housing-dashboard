@@ -50,7 +50,7 @@
       "title": {
         "text": "1. National Rent Growth Over Time",
         "anchor": "middle",
-        "fontSize": 25,
+        "fontSize": 25
       },
 
       "transform": [
@@ -266,7 +266,7 @@
           "type": "quantitative",
           "title": "Completions per 1,000",
           "scale": { 
-            "scheme": "viridis",
+            "scheme": "cividis",
             "domain": [0, 14] 
             },
           "legend": {
