@@ -30,7 +30,7 @@
       "titleFontSize": 16
     },
     "title": {
-      "fontSize": 20
+      "fontSize": 25
     }
   },
 
@@ -90,14 +90,15 @@
       },
 
       "width": 800,
-      "height": 280
+      "height": 320
     },
 
     {
       "title": {
         "text": "National vs Dublin",
         "anchor": "middle",
-        "fontSize": 25
+        "offset": 25,
+        "fontSize": 30
       },
 
       "transform": [
@@ -113,7 +114,8 @@
           "title": {
             "text": "2. Price Growth (%): National vs Dublin",
             "anchor": "middle",
-            "fontSize": 20
+            "frame": "group",
+            "fontSize": 25
           },
 
           "transform": [
@@ -169,13 +171,13 @@
           },
 
           "width": 800,
-          "height": 220
+          "height": 320
         },
         {
           "title": {
             "text": "3. Supply (Completions per 1,000): National vs Dublin",
             "anchor": "middle",
-            "fontSize": 20
+            "fontSize": 25
           },
 
           "transform": [
@@ -229,7 +231,7 @@
           },
 
           "width": 800,
-          "height": 220
+          "height": 320
         }
       ]
     },
